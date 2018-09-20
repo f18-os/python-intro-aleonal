@@ -1,19 +1,8 @@
 #!/usr/bin/env python3
-
 import os, sys, time, re
-
-def header():
-    os.write(1, ("====================================\n\tWelcome to TxShell!\n------------------------------------\n").encode())
-    os.write(1, ("\t Built-in Commands\n\n").encode())
-    os.write(1, ('1. "exit" to exit\n').encode())
-    os.write(1, ('2. ">" to redirect output | e.g. wc shell.py > output.txt\n').encode())
-    os.write(1, ('3. "<" to redirect input | e.g. python3 iCountWords.py < wordlist.txt > output.txt\n').encode())
-    os.write(1, ('4. "|" to pipe output from the first command to the input of the second command | e.g. wc shell.py | cat \n').encode())
-    os.write(1, ("====================================\n\n").encode())
 
 
 def main():
-    header()
     os.environ['PS1'] = "$: "
 
     while True:
@@ -82,6 +71,9 @@ def metaChild(args):
 
 def processExec(args):
     newArgs = changeIO(args)
+    if '/' in args[0]:
+        print("swag")
+        os.execve(args[0], newArgs, os.environ)
 
     for dir in re.split(":", os.environ['PATH']): # try each directory in path
         program = "%s/%s" % (dir, args[0])
