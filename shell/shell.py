@@ -72,7 +72,6 @@ def metaChild(args):
 def processExec(args):
     newArgs = changeIO(args)
     if '/' in args[0]:
-        print("swag")
         os.execve(args[0], newArgs, os.environ)
 
     for dir in re.split(":", os.environ['PATH']): # try each directory in path
